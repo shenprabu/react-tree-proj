@@ -3,20 +3,34 @@ import TreeItem from '@mui/lab/TreeItem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
+import { useState } from "react";
 import { useSelector } from 'react-redux';
 
 import TextWithCheckbox from './comp/TextWithCheckbox';
 
+
 function FilterTree(props) {
+
     const treedata = useSelector(state => state.treedata)
+
+    const [searchKey, setSearchKey] = useState('')
+
+    const searchedTreedata = () => {
+        if(searchKey){
+            const updatedTreedata = treedata.data.filter(cat => cat.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1 || cat.options.some(opt => opt.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1))
+            return {data: updatedTreedata}
+        }
+        return treedata
+    }
+
     return(
         <div>
-
+            <input onChange={e => setSearchKey(e.target.value)}/>
             <TreeView 
                 defaultCollapseIcon={<ExpandMoreIcon />} 
                 defaultExpandIcon={<ChevronRightIcon />} 
             >
-                {treedata && treedata.data.map(category => 
+                {searchedTreedata().data.map(category => 
                     <div key={category.name}>
                         <TreeItem nodeId={category.name} label={ 
                             <TextWithCheckbox 

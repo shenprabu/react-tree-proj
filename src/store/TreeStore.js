@@ -3,15 +3,17 @@ import statedata from "../data/statedata";
 
 const treeStoreReducer = (state = statedata, action) => {
 
+    const treedata = state.treedata.data;
+    let updatedData = [];
+
     switch(action.type) {
         case 'CHECK':
             const {checkVal, props} = action;
 
-            const treedata = state.treedata.data;
-
-            const updatedData = treedata.map(cat => reduceCat(cat, props, checkVal))
+            updatedData = treedata.map(cat => reduceCat(cat, props, checkVal))
 
             return { treedata: {data: updatedData }}
+            
     }
     return state;
 }

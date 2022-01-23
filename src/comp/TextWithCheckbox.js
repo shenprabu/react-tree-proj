@@ -6,20 +6,19 @@ function TextWithCheckbox(props) {
     const dispatch = useDispatch();
 
     const handleChange = (event) => {
-        dispatch({
-            type: 'CHECK',
-            checkVal: event.target.checked,
-            props
-        })
+        dispatchCheck(event.target.checked)
         // indeterminate => $(`[id='${id}']`).indeterminate = true
     }
 
     const handleTextClick = (event) => {
         event.stopPropagation();
+        dispatchCheck(!props.checked)
+    }
 
+    const dispatchCheck = (checkVal) => {
         dispatch({
             type: 'CHECK',
-            checkVal: !props.checked,
+            checkVal,
             props
         })
     }
