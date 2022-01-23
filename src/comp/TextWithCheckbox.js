@@ -9,7 +9,6 @@ function TextWithCheckbox(props) {
 
     const handleCheck = (event) => {
         dispatchCheck(event.target.checked)
-        // indeterminate => $(`[id='${id}']`).indeterminate = true
     }
 
     const handleTextClick = (event) => {
@@ -30,6 +29,7 @@ function TextWithCheckbox(props) {
             <Checkbox
                 id={props.text} 
                 checked={props.checked} 
+                indeterminate={props.indeterminate}
                 onClick={(e) => e.stopPropagation()} 
                 onChange={handleCheck} 
             /> 

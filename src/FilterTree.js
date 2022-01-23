@@ -15,7 +15,7 @@ function FilterTree(props) {
 
     const [searchKey, setSearchKey] = useState('')
 
-    // tried to expand the node for searching a child
+    // TODO - tried to expand the node for searching a child
     /* const [expanded, setExpanded] = useState([])
 
     const nodeToggle = (event, catIds) => {
@@ -24,7 +24,18 @@ function FilterTree(props) {
 
     const searchedTreedata = () => {
         if(searchKey){
-            const updatedTreedata = treedata.data.filter(cat => cat.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1 || cat.options.some(opt => opt.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1))
+            const updatedTreedata = [];
+
+            treedata.data.forEach(cat => {
+                if(cat.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1) {
+                    updatedTreedata.push(cat)
+                    return
+                }
+                const updatedOptions = cat.options.filter(opt => opt.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1)
+                if(updatedOptions.length) {
+                    updatedTreedata.push({...cat, options: updatedOptions})
+                }
+            })
             return {data: updatedTreedata}
         }
         return treedata
@@ -37,11 +48,11 @@ function FilterTree(props) {
     return(
         <div>
             <TextWithCheckbox 
-                // can use useState for searchedTreedata length
-                checked={searchedTreedata().data.length && searchedTreedata().data.every(cat => cat.checked)}
+                checked={searchedTreedata().data.length !== 0 && treedata.data.every(cat => cat.checked)}
+                indeterminate={searchedTreedata().data.length !== 0 && treedata.data.some(cat => cat.checked) && !treedata.data.every(cat => cat.checked)}
                 isSearch={true}
                 searchKey={searchKey}
-                onChange={e => setSearchKey(e.target.value)}
+                onChange={e => setSearchKey(e.target.value)}    // TODO - implement debounce
             />
             
             {searchedTreedata().data.length && 
@@ -59,6 +70,7 @@ function FilterTree(props) {
                                 id={cat.id} 
                                 level={cat.level} 
                                 checked={cat.checked}
+                                indeterminate={cat.indeterminate}
                             />
                         } >
                         {cat.options.map(option => 

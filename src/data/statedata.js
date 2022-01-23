@@ -7,6 +7,7 @@ const treedata =
                 name: 'Participant',    // filter category
                 level: 0,
                 checked: false,
+                indeterminate: false,
                 options: [
                     {
                         id: 1,
@@ -37,6 +38,7 @@ const treedata =
                 name: 'Game of choice',
                 level: 0,
                 checked: false,
+                indeterminate: false,
                 options: [
                     {
                         id: 1,
@@ -60,6 +62,7 @@ const treedata =
                 name: 'Performance',
                 level: 0,
                 checked: false,
+                indeterminate: false,
                 options: [
                     {
                         id: 1,

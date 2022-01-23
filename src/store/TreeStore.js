@@ -27,6 +27,7 @@ const reduceCat = (cat, props, checkVal) => {
 
         return {...cat,
             checked: props.isSearch || props.level === 0 ? checkVal : updatedOptions.every(opt => opt.checked),
+            indeterminate: updatedOptions.some(opt => opt.checked) && !updatedOptions.every(opt => opt.checked),
             options: updatedOptions
         }
     }
