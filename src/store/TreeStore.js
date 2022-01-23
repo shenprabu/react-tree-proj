@@ -21,12 +21,12 @@ const treeStoreReducer = (state = statedata, action) => {
 const reduceCat = (cat, props, checkVal) => {
     const catId = props.cat_id || props.id;
     
-    if(cat.id === catId) {  // updated one
+    if(props.isSearch || cat.id === catId) {  // updated one
 
         let updatedOptions = cat.options.map(opt => reduceOpt(opt, props, checkVal))
 
         return {...cat,
-            checked: props.level === 0 ? checkVal : updatedOptions.every(opt => opt.checked),
+            checked: props.isSearch || props.level === 0 ? checkVal : updatedOptions.every(opt => opt.checked),
             options: updatedOptions
         }
     }
@@ -36,7 +36,7 @@ const reduceCat = (cat, props, checkVal) => {
 
 const reduceOpt = (opt, props, checkVal) => {
     
-    if(props.level === 0 || opt.id === props.id)
+    if(props.isSearch || props.level === 0 || opt.id === props.id)
     return {...opt, checked: checkVal}
     
     return opt

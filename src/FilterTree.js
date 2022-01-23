@@ -15,6 +15,13 @@ function FilterTree(props) {
 
     const [searchKey, setSearchKey] = useState('')
 
+    // tried to expand the node for searching a child
+    /* const [expanded, setExpanded] = useState([])
+
+    const nodeToggle = (event, catIds) => {
+        setExpanded(catIds)
+    } */
+
     const searchedTreedata = () => {
         if(searchKey){
             const updatedTreedata = treedata.data.filter(cat => cat.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1 || cat.options.some(opt => opt.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1))
@@ -23,30 +30,44 @@ function FilterTree(props) {
         return treedata
     }
 
+    const onDragFun = (event) => {
+        console.log(event)
+    }
+
     return(
         <div>
-            <input onChange={e => setSearchKey(e.target.value)}/>
+            <TextWithCheckbox 
+                // can use useState for searchedTreedata length
+                checked={searchedTreedata().data.length && searchedTreedata().data.every(cat => cat.checked)}
+                isSearch={true}
+                searchKey={searchKey}
+                onChange={e => setSearchKey(e.target.value)}
+            />
+            
+            {searchedTreedata().data.length && 
             <TreeView 
                 defaultCollapseIcon={<ExpandMoreIcon />} 
                 defaultExpandIcon={<ChevronRightIcon />} 
+                /* expanded={expanded}
+                onNodeToggle={nodeToggle} */
             >
-                {searchedTreedata().data.map(category => 
-                    <div key={category.name}>
-                        <TreeItem nodeId={category.name} label={ 
+                {searchedTreedata().data.map(cat => 
+                    <div key={cat.name}>
+                        <TreeItem nodeId={'' + cat.id} label={ 
                             <TextWithCheckbox 
-                                text={category.name} 
-                                id={category.id} 
-                                level={category.level} 
-                                checked={category.checked}
+                                text={cat.name} 
+                                id={cat.id} 
+                                level={cat.level} 
+                                checked={cat.checked}
                             />
                         } >
-                        {category.options.map(option => 
+                        {cat.options.map(option => 
                             <div key={option.name}>
                                 <TreeItem nodeId={option.name} label={
                                     <TextWithCheckbox 
                                         text={option.name} 
                                         id={option.id} 
-                                        cat_id={category.id}
+                                        cat_id={cat.id}
                                         level={option.level} 
                                         checked={option.checked}
                                     />
@@ -56,7 +77,8 @@ function FilterTree(props) {
                         </TreeItem>
                     </div>
                 )}
-            </TreeView>
+            </TreeView> ||
+            'No data found'}
             
         </div>
     )

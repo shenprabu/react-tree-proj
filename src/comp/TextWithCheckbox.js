@@ -1,3 +1,5 @@
+import Checkbox from '@mui/material/Checkbox';
+
 import { useDispatch } from 'react-redux';
 
 
@@ -5,7 +7,7 @@ function TextWithCheckbox(props) {
 
     const dispatch = useDispatch();
 
-    const handleChange = (event) => {
+    const handleCheck = (event) => {
         dispatchCheck(event.target.checked)
         // indeterminate => $(`[id='${id}']`).indeterminate = true
     }
@@ -25,13 +27,16 @@ function TextWithCheckbox(props) {
 
     return(
         <div>
-            <input type="checkbox"
+            <Checkbox
                 id={props.text} 
                 checked={props.checked} 
                 onClick={(e) => e.stopPropagation()} 
-                onChange={handleChange} 
+                onChange={handleCheck} 
             /> 
-            <a onClick={handleTextClick}> {props.text} </a>
+            {props.isSearch &&
+            <input onChange={props.onChange} defaultValue={props.text}/> ||
+            <a onClick={handleTextClick}> {props.text} </a>}
+            
         </div>
     )
 }
