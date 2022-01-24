@@ -24,6 +24,10 @@
 .tree-item-lable {
     display: flex;
     margin-top: 10px;
+
+    .edit-item {
+        height: 18px;
+    }
 }
 
 .tree-item-actions {

@@ -2,12 +2,13 @@ import Checkbox from '@mui/material/Checkbox';
 import EditIcon from '@mui/icons-material/EditOutlined'
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 
+import { useState } from "react";
 import { useDispatch } from 'react-redux';
 
 
 function TextWithCheckbox(props) {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const handleCheck = (event) => {
         dispatchCheck(event.target.checked)
@@ -26,6 +27,32 @@ function TextWithCheckbox(props) {
         })
     }
 
+    const [isEdit, setIsEdit] = useState(false)
+
+    const handleEdit = (event) => {
+        if(event.key === 'Enter') {
+            dispatch({
+                type: 'EDIT',
+                newVal: event.target.value,
+                props
+            })
+            setIsEdit(false)
+        }
+        if(event.key === 'Escape') {
+            setIsEdit(false)
+        }
+    }
+
+    const handleDelete = (event) => {
+        event.stopPropagation();
+        if(window.confirm(`Delete item "${props.text}"?`)) {
+            dispatch({
+                type: 'DELETE',
+                props
+            })
+        }
+    }
+
     return(
         <div className='tree-item'>
             <Checkbox
@@ -35,10 +62,13 @@ function TextWithCheckbox(props) {
                 onChange={handleCheck} 
             /> 
             <div className='tree-item-lable' onClick={handleTextClick}> 
-                {props.text} 
+                {isEdit && 
+                <input className='edit-item' onClick={e => e.stopPropagation()} onKeyUp={handleEdit} defaultValue={props.text} /> ||
+                props.text} 
+
                 <div className='tree-item-actions'>
-                    {props.level !==0 && <EditIcon className='edit-icon' fontSize='small' color='action' onClick={e => e.stopPropagation()} />}
-                    {props.level !== 0 && <DeleteIcon className='delete-icon' color='action' onClick={e => e.stopPropagation()} /> }
+                    {props.level !== 0 && !isEdit && <EditIcon className='edit-icon' fontSize='small' color='action' onClick={e => {e.stopPropagation(); setIsEdit(true)}} />}
+                    {props.level !== 0 && <DeleteIcon className='delete-icon' color='action' onClick={handleDelete} /> }
                 </div>
             </div> 
             
