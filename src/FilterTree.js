@@ -6,7 +6,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 
-import './styles/FilterTree.css';
+import './styles/FilterTree.scss';
 
 import TextWithCheckbox from './comp/TextWithCheckbox';
 import SearchArea from './comp/SearchArea';

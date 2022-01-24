@@ -1,0 +1,37 @@
+    
+.search-area {
+    margin-left: 31px;
+}
+
+.search-area input {
+    padding-right: 16px;
+}
+
+.clear-search {
+    margin-bottom: -4px;
+    margin-left: -22px;
+    cursor: pointer;
+}
+
+.nodata {
+    margin-left: 44px;
+}
+
+.tree-item {
+    display: flex;
+}
+
+.tree-item-lable {
+    display: flex;
+    margin-top: 10px;
+}
+
+.tree-item-actions {
+    margin-left: 10px;
+    margin-top: -2px;
+
+    .edit-icon {
+        margin-bottom: 2px;
+    }
+}
+
