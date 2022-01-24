@@ -25,7 +25,7 @@ function FilterTree(props) {
         setExpanded(catIds)
     } */
 
-    const searchedTreedata = () => {
+    const searchTreedata = () => {
         if(searchKey){
             const updatedTreedata = [];
 
@@ -44,6 +44,8 @@ function FilterTree(props) {
         return treedata
     }
 
+    const searchedTreedata = searchTreedata()
+
     const onDragFun = (event) => {
         console.log(event)
     }
@@ -51,8 +53,8 @@ function FilterTree(props) {
     return(
         <div>
             <SearchArea 
-                checked={searchedTreedata().data.length !== 0 && treedata.data.every(cat => cat.checked)}
-                indeterminate={searchedTreedata().data.length !== 0 && 
+                checked={searchedTreedata.data.length !== 0 && treedata.data.every(cat => cat.checked)}
+                indeterminate={searchedTreedata.data.length !== 0 && 
                                 treedata.data.some(cat => cat.indeterminate || cat.checked) && !treedata.data.every(cat => cat.checked)}
                 isSearch={true}
                 searchKey={searchKey}
@@ -60,14 +62,14 @@ function FilterTree(props) {
                 clearSearch={() => setSearchKey('')}
             />
             
-            {searchedTreedata().data.length && 
+            {searchedTreedata.data.length && 
             <TreeView 
                 defaultCollapseIcon={<ExpandMoreIcon />} 
                 defaultExpandIcon={<ChevronRightIcon />} 
                 /* expanded={expanded}
                 onNodeToggle={nodeToggle} */
             >
-                {searchedTreedata().data.map(cat => 
+                {searchedTreedata.data.map(cat => 
                     <div key={cat.name}>
                         <TreeItem nodeId={'' + cat.id} label={ 
                             <TextWithCheckbox 
