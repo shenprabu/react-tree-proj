@@ -6,7 +6,10 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useState } from "react";
 import { useSelector } from 'react-redux';
 
+import './styles/FilterTree.css';
+
 import TextWithCheckbox from './comp/TextWithCheckbox';
+import SearchArea from './comp/SearchArea';
 
 
 function FilterTree(props) {
@@ -47,12 +50,14 @@ function FilterTree(props) {
 
     return(
         <div>
-            <TextWithCheckbox 
+            <SearchArea 
                 checked={searchedTreedata().data.length !== 0 && treedata.data.every(cat => cat.checked)}
-                indeterminate={searchedTreedata().data.length !== 0 && treedata.data.some(cat => cat.checked) && !treedata.data.every(cat => cat.checked)}
+                indeterminate={searchedTreedata().data.length !== 0 && 
+                                treedata.data.some(cat => cat.indeterminate || cat.checked) && !treedata.data.every(cat => cat.checked)}
                 isSearch={true}
                 searchKey={searchKey}
-                onChange={e => setSearchKey(e.target.value)}    // TODO - implement debounce
+                onSearch={e => setSearchKey(e.target.value)}    // TODO - implement debounce
+                clearSearch={() => setSearchKey('')}
             />
             
             {searchedTreedata().data.length && 
@@ -90,7 +95,7 @@ function FilterTree(props) {
                     </div>
                 )}
             </TreeView> ||
-            'No data found'}
+            <div className='nodata'> 'No data found' </div>}
             
         </div>
     )

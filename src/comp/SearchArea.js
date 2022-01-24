@@ -1,20 +1,15 @@
 import Checkbox from '@mui/material/Checkbox';
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import ClearIcon from '@mui/icons-material/Clear';
 
 import { useDispatch } from 'react-redux';
 
 
-function TextWithCheckbox(props) {
+function SearchArea(props) {
 
     const dispatch = useDispatch();
 
     const handleCheck = (event) => {
         dispatchCheck(event.target.checked)
-    }
-
-    const handleTextClick = (event) => {
-        event.stopPropagation();
-        dispatchCheck(!props.checked)
     }
 
     const dispatchCheck = (checkVal) => {
@@ -25,18 +20,20 @@ function TextWithCheckbox(props) {
         })
     }
 
+    const clearSearch = (event) => {
+        props.clearSearch();
+    }
+
     return(
-        <div>
+        <div className='search-area'>
             <Checkbox
                 checked={props.checked} 
                 indeterminate={props.indeterminate}
-                onClick={(e) => e.stopPropagation()} 
                 onChange={handleCheck} 
             /> 
-            <a onClick={handleTextClick}> {props.text} <DeleteIcon className='delete-item' color='action' onClick={e => e.stopPropagation()} /> </a> 
-            
+            <input onChange={props.onSearch} value={props.searchKey}/> <ClearIcon className='clear-search' fontSize='5px' color='action' onClick={clearSearch} />
         </div>
     )
 }
 
-export default TextWithCheckbox
+export default SearchArea
