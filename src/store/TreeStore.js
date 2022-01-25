@@ -1,7 +1,14 @@
 import { createStore } from "redux";
 import statedata from "../data/statedata";
 
-const treeStoreReducer = (state = statedata, action) => {
+const fetchData = () => {
+    if(sessionStorage.getItem('treedata') !== null) {
+        return JSON.parse(sessionStorage.getItem('treedata'))
+    }
+    return statedata
+}
+
+const treeStoreReducer = (state = fetchData(), action) => {
 
     const treedata = state.treedata.data;
     
@@ -9,14 +16,14 @@ const treeStoreReducer = (state = statedata, action) => {
 
     switch(action.type) {
         case 'CHECK':
-            const {checkVal, props} = action;
+            const {checkVal, props} = action
 
             updatedData = treedata.map(cat => checkCat(cat, props, checkVal))
 
-            return { treedata: {data: updatedData }}
+            break
             
         case 'DELETE': {
-            const {id, cat_id} = action.props;
+            const {id, cat_id} = action.props
 
             updatedData = treedata.map(cat => {
                 if(cat.id === cat_id) {
@@ -30,11 +37,11 @@ const treeStoreReducer = (state = statedata, action) => {
                 return cat
             })
 
-            return { treedata: {data: updatedData }}
+            break
         }
 
         case 'EDIT': {
-            const {id, cat_id} = action.props;
+            const {id, cat_id} = action.props
             const newVal = action.newVal
 
             updatedData = treedata.map(cat => {
@@ -50,10 +57,17 @@ const treeStoreReducer = (state = statedata, action) => {
                 return cat
             })
 
-            return { treedata: {data: updatedData }}
+            break
         }
+
+        default:
+            updatedData = treedata
+        
     }
-    return state;
+
+    const newState = { treedata: {data: updatedData }}
+    sessionStorage.setItem('treedata', JSON.stringify(newState))
+    return newState;
 }
 
 const checkCat = (cat, props, checkVal) => {
