@@ -60,6 +60,20 @@ const treeStoreReducer = (state = fetchData(), action) => {
             break
         }
 
+        case 'REORDER': {
+
+            const {draggedId, newIndex, cat_id} = action
+
+            updatedData = treedata.map(cat => {
+                if(cat.id === cat_id) {
+                    reOrderOptions(cat, draggedId, newIndex)
+                }
+                return cat
+            })
+
+            break
+        }
+
         default:
             updatedData = treedata
         
@@ -68,6 +82,29 @@ const treeStoreReducer = (state = fetchData(), action) => {
     const newState = { treedata: {data: updatedData }}
     sessionStorage.setItem('treedata', JSON.stringify(newState))
     return newState;
+}
+
+const reOrderOptions = (cat, draggedId, newIndex) => {
+    const oldIndex = cat.options.find(opt => opt.id === draggedId).order
+    if(oldIndex === newIndex) return cat
+    
+    const updatedOptions = cat.options.map(opt => {
+
+        // move order by 1 for options between oldIndex and newIndex
+        if(oldIndex < newIndex) {
+            if(opt.order <= newIndex && opt.order > oldIndex) opt.order = opt.order - 1
+        }
+        else {  // (oldIndex > newIndex)
+            if(opt.order >= newIndex && opt.order < oldIndex) opt.order = opt.order + 1
+        }
+
+        // set the newIndex for dragged option 
+        if(opt.id === draggedId) opt.order = newIndex
+
+        return opt
+    })
+
+    return {...cat, options: updatedOptions}
 }
 
 const checkCat = (cat, props, checkVal) => {

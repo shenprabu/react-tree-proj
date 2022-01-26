@@ -4,12 +4,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 import { useState } from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import './styles/FilterTree.scss';
 
 import TextWithCheckbox from './comp/TextWithCheckbox';
 import SearchArea from './comp/SearchArea';
+import DraggableItem from './comp/DraggableItem';
 
 
 function FilterTree(props) {
@@ -44,14 +48,24 @@ function FilterTree(props) {
         return treedata
     }
 
-    const searchedTreedata = searchTreedata()
+    const searchedTreedata = {data: searchTreedata().data.map(cat => {
+        cat.options.sort((a, b) => {
+            return a.order > b.order ? 1 : -1
+        })
+        return cat
+    })}
 
-    const onDragFun = (event) => {
-        console.log(event)
+    const dispatch = useDispatch()
+
+    const moveItem = (draggedId, newIndex, cat_id) => {
+        dispatch({
+            type: 'REORDER',
+            draggedId, newIndex, cat_id
+        })
     }
 
     return(
-        <div>
+        <DndProvider backend={HTML5Backend}>
             <SearchArea 
                 checked={searchedTreedata.data.length !== 0 && treedata.data.every(cat => cat.checked)}
                 indeterminate={searchedTreedata.data.length !== 0 && 
@@ -81,8 +95,14 @@ function FilterTree(props) {
                             />
                         } >
                         {cat.options.map(option => 
-                            <div key={option.name}>
-                                <TreeItem nodeId={option.name} label={
+                            <DraggableItem 
+                                key={option.name}
+                                id={option.id} 
+                                listId={cat.id} 
+                                index={option.order}
+                                moveItem={moveItem}
+                            >
+                                <TreeItem nodeId={option.name} onFocusCapture={e => e.stopPropagation()} label={
                                     <TextWithCheckbox 
                                         text={option.name} 
                                         id={option.id} 
@@ -91,7 +111,7 @@ function FilterTree(props) {
                                         checked={option.checked}
                                     />
                                 } />
-                            </div>
+                            </DraggableItem>
                         )}
                         </TreeItem>
                     </div>
@@ -99,7 +119,7 @@ function FilterTree(props) {
             </TreeView> ||
             <div className='nodata'> 'No data found' </div>}
             
-        </div>
+        </DndProvider>
     )
 }
 
