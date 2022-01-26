@@ -9,6 +9,7 @@ function SearchArea(props) {
     const dispatch = useDispatch();
 
     const handleCheck = (event) => {
+        if(!props.isNodata)
         dispatchCheck(event.target.checked)
     }
 
@@ -16,11 +17,11 @@ function SearchArea(props) {
         dispatch({
             type: 'CHECK',
             checkVal,
-            props
+            props: {...props, isCheckAll: true}
         })
     }
 
-    const clearSearch = (event) => {
+    const clearSearch = () => {
         props.clearSearch();
     }
 

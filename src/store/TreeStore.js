@@ -17,6 +17,7 @@ const treeStoreReducer = (state = fetchData(), action) => {
     switch(action.type) {
         case 'CHECK':
             const {checkVal, props} = action
+            console.log()
 
             updatedData = treedata.map(cat => checkCat(cat, props, checkVal))
 
@@ -110,13 +111,13 @@ const reOrderOptions = (cat, draggedId, newIndex) => {
 const checkCat = (cat, props, checkVal) => {
     const catId = props.cat_id || props.id;
     
-    if(props.isSearch || cat.id === catId) {  // updated one
+    if(props.isCheckAll || cat.id === catId) {  // updated one
 
         const updatedOptions = cat.options.map(opt => checkOpt(opt, props, checkVal))
 
         return {...cat,
             options: updatedOptions,
-            checked: props.isSearch || props.level === 0 ? checkVal : updatedOptions.every(opt => opt.checked),
+            checked: props.isCheckAll || props.level === 0 ? checkVal : updatedOptions.every(opt => opt.checked),
             indeterminate: updatedOptions.some(opt => opt.checked) && !updatedOptions.every(opt => opt.checked)
         }
     }
@@ -126,7 +127,7 @@ const checkCat = (cat, props, checkVal) => {
 
 const checkOpt = (opt, props, checkVal) => {
     
-    if(props.isSearch || props.level === 0 || opt.id === props.id)
+    if(props.isCheckAll || props.level === 0 || opt.id === props.id)
     return {...opt, checked: checkVal}
     
     return opt

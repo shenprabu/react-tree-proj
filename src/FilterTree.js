@@ -63,8 +63,8 @@ function FilterTree(props) {
                 checked={searchedTreedata.data.length !== 0 && treedata.data.every(cat => cat.checked)}
                 indeterminate={searchedTreedata.data.length !== 0 && 
                                 treedata.data.some(cat => cat.indeterminate || cat.checked) && !treedata.data.every(cat => cat.checked)}
-                isSearch={true}
                 searchKey={searchKey}
+                isNodata={searchedTreedata.data.length === 0}
                 onSearch={e => setSearchKey(e.target.value)}    // TODO - implement debounce
                 clearSearch={() => setSearchKey('')}
             />
@@ -76,7 +76,7 @@ function FilterTree(props) {
             >
                 {searchedTreedata.data.map(cat => 
                     <div key={cat.id}>
-                        <TreeItem nodeId={'' + cat.id} label={ 
+                        <TreeItem nodeId={cat.name} label={ 
                             <TextWithCheckbox 
                                 text={cat.name} 
                                 id={cat.id} 
@@ -93,7 +93,7 @@ function FilterTree(props) {
                                 index={option.order}
                                 moveItem={moveItem}
                             >
-                                <TreeItem nodeId={'' + option.id} onFocusCapture={e => e.stopPropagation()} label={
+                                <TreeItem nodeId={option.name} onFocusCapture={e => e.stopPropagation()} label={
                                     <TextWithCheckbox 
                                         text={option.name} 
                                         id={option.id} 
