@@ -22,13 +22,6 @@ function FilterTree(props) {
 
     const [searchKey, setSearchKey] = useState('')
 
-    // TODO - tried to expand the node for searching a child
-    /* const [expanded, setExpanded] = useState([])
-
-    const nodeToggle = (event, catIds) => {
-        setExpanded(catIds)
-    } */
-
     const searchTreedata = () => {
         if(searchKey){
             const updatedTreedata = [];
@@ -76,15 +69,13 @@ function FilterTree(props) {
                 clearSearch={() => setSearchKey('')}
             />
             
-            {searchedTreedata.data.length && 
+            {searchedTreedata.data.length ? 
             <TreeView 
                 defaultCollapseIcon={<ExpandMoreIcon />} 
                 defaultExpandIcon={<ChevronRightIcon />} 
-                /* expanded={expanded}
-                onNodeToggle={nodeToggle} */
             >
                 {searchedTreedata.data.map(cat => 
-                    <div key={cat.name}>
+                    <div key={cat.id}>
                         <TreeItem nodeId={'' + cat.id} label={ 
                             <TextWithCheckbox 
                                 text={cat.name} 
@@ -96,13 +87,13 @@ function FilterTree(props) {
                         } >
                         {cat.options.map(option => 
                             <DraggableItem 
-                                key={option.name}
+                                key={option.id}
                                 id={option.id} 
                                 listId={cat.id} 
                                 index={option.order}
                                 moveItem={moveItem}
                             >
-                                <TreeItem nodeId={option.name} onFocusCapture={e => e.stopPropagation()} label={
+                                <TreeItem nodeId={'' + option.id} onFocusCapture={e => e.stopPropagation()} label={
                                     <TextWithCheckbox 
                                         text={option.name} 
                                         id={option.id} 
@@ -116,7 +107,7 @@ function FilterTree(props) {
                         </TreeItem>
                     </div>
                 )}
-            </TreeView> ||
+            </TreeView> :
             <div className='nodata'> 'No data found' </div>}
             
         </DndProvider>

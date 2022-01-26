@@ -65,8 +65,8 @@ function TextWithCheckbox(props) {
                 style={{color}}
             /> 
             <div className='tree-item-lable' onClick={handleTextClick}> 
-                {isEdit && 
-                <input className='edit-item' onClick={e => e.stopPropagation()} onKeyUp={handleEdit} defaultValue={props.text} /> ||
+                {isEdit ? 
+                <input className='edit-item' onClick={e => e.stopPropagation()} onKeyUp={handleEdit} defaultValue={props.text} /> :
                 props.text} 
 
                 <div className='tree-item-actions'>
