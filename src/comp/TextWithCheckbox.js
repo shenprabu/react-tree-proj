@@ -53,6 +53,8 @@ function TextWithCheckbox(props) {
         }
     }
 
+    const color = props.checked ? '#1976d2' : '#888'
+
     return(
         <div className='tree-item'>
             <Checkbox
@@ -60,6 +62,7 @@ function TextWithCheckbox(props) {
                 indeterminate={props.indeterminate}
                 onClick={(e) => e.stopPropagation()} 
                 onChange={handleCheck} 
+                style={{color}}
             /> 
             <div className='tree-item-lable' onClick={handleTextClick}> 
                 {isEdit && 
