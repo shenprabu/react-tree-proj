@@ -24,7 +24,8 @@ function SearchArea(props) {
     }
 
     const clearSearch = () => {
-        props.clearSearch();
+        props.clearSearch()
+        document.getElementById('search-box').value = ''
     }
 
     const color = props.checked ? colorCodes.BLUE : colorCodes.GREY
@@ -37,7 +38,7 @@ function SearchArea(props) {
                 onChange={handleCheck} 
                 style={{color}}
             /> 
-            <input onChange={props.onSearch} value={props.searchKey}/> <ClearIcon className='clear-search' fontSize='5px' color='action' onClick={clearSearch} />
+            <input id='search-box' onChange={props.onSearch} /> <ClearIcon className='clear-search' fontSize='5px' color='action' onClick={clearSearch} />
         </div>
     )
 }

@@ -22,6 +22,13 @@ function FilterTree(props) {
     const treedata = useSelector(state => state.treedata)
 
     const [searchKey, setSearchKey] = useState('')
+    
+    // debouncing search
+    let timer
+    const search = (searchVal, timeout = 300) => {
+        if(timer) clearTimeout(timer)
+        timer = setTimeout(() => setSearchKey(searchVal), timeout)
+    }
 
     const searchTreedata = () => {
         if(searchKey){
@@ -64,9 +71,8 @@ function FilterTree(props) {
                 checked={searchedTreedata.data.length !== 0 && treedata.data.every(cat => cat.checked)}
                 indeterminate={searchedTreedata.data.length !== 0 && 
                                 treedata.data.some(cat => cat.indeterminate || cat.checked) && !treedata.data.every(cat => cat.checked)}
-                searchKey={searchKey}
                 isNodata={searchedTreedata.data.length === 0}
-                onSearch={e => setSearchKey(e.target.value)}    // TODO - implement debounce
+                onSearch={e => search(e.target.value)}
                 clearSearch={() => setSearchKey('')}
             />
             
