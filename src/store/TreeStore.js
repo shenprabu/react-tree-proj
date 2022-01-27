@@ -1,4 +1,6 @@
 import { createStore } from "redux";
+
+import { actions } from "../consts/StringConsts";
 import statedata from "../data/statedata";
 
 const fetchData = () => {
@@ -15,7 +17,9 @@ const treeStoreReducer = (state = fetchData(), action) => {
     let updatedData = [];
 
     switch(action.type) {
-        case 'CHECK':
+
+        case actions.CHECK:
+
             const {checkVal, props} = action
             console.log()
 
@@ -23,7 +27,8 @@ const treeStoreReducer = (state = fetchData(), action) => {
 
             break
             
-        case 'DELETE': {
+        case actions.DELETE: {
+
             const {id, cat_id} = action.props
 
             updatedData = treedata.map(cat => {
@@ -41,7 +46,8 @@ const treeStoreReducer = (state = fetchData(), action) => {
             break
         }
 
-        case 'EDIT': {
+        case actions.EDIT: {
+
             const {id, cat_id} = action.props
             const newVal = action.newVal
 
@@ -61,7 +67,7 @@ const treeStoreReducer = (state = fetchData(), action) => {
             break
         }
 
-        case 'REORDER': {
+        case actions.REORDER: {
 
             const {draggedId, newIndex, cat_id} = action
 

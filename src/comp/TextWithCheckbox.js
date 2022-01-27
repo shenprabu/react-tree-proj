@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 
+import { actions, colorCodes, keys } from '../consts/StringConsts'
 
 function TextWithCheckbox(props) {
 
@@ -21,7 +22,7 @@ function TextWithCheckbox(props) {
 
     const dispatchCheck = (checkVal) => {
         dispatch({
-            type: 'CHECK',
+            type: actions.CHECK,
             checkVal,
             props
         })
@@ -31,15 +32,15 @@ function TextWithCheckbox(props) {
     const [isHover, setIsHover] = useState(false)
 
     const handleEdit = (event) => {
-        if(event.key === 'Enter') {
+        if(event.key === keys.ENTER) {
             dispatch({
-                type: 'EDIT',
+                type: actions.EDIT,
                 newVal: event.target.value,
                 props
             })
             setIsEdit(false)
         }
-        if(event.key === 'Escape') {
+        if(event.key === keys.ESCAPE) {
             setIsEdit(false)
         }
     }
@@ -48,13 +49,13 @@ function TextWithCheckbox(props) {
         event.stopPropagation();
         if(window.confirm(`Delete item "${props.text}"?`)) {
             dispatch({
-                type: 'DELETE',
+                type: actions.DELETE,
                 props
             })
         }
     }
 
-    const color = props.checked ? '#1976d2' : '#888'
+    const color = props.checked ? colorCodes.BLUE : colorCodes.GREY
 
     return(
         <div className='tree-item' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
@@ -70,9 +71,9 @@ function TextWithCheckbox(props) {
                 <input className='edit-item' onClick={e => e.stopPropagation()} onKeyUp={handleEdit} defaultValue={props.text} /> :
                 props.text} 
 
-                {isHover && <div className='tree-item-actions'>
-                    {props.level !== 0 && !isEdit && <EditIcon className='edit-icon' fontSize='small' color='action' onClick={e => {e.stopPropagation(); setIsEdit(true)}} />}
-                    {props.level !== 0 && <DeleteIcon className='delete-icon' color='action' onClick={handleDelete} /> }
+                {props.level !== 0 && isHover && <div className='tree-item-actions'>
+                    {!isEdit && <EditIcon className='edit-icon' fontSize='small' color='action' onClick={e => {e.stopPropagation(); setIsEdit(true)}} />}
+                    <DeleteIcon className='delete-icon' color='action' onClick={handleDelete} />
                 </div>}
             </div> 
             

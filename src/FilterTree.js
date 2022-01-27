@@ -14,6 +14,7 @@ import './styles/FilterTree.scss';
 import TextWithCheckbox from './comp/TextWithCheckbox';
 import SearchArea from './comp/SearchArea';
 import DraggableItem from './comp/DraggableItem';
+import { actions, messages } from './consts/StringConsts';
 
 
 function FilterTree(props) {
@@ -52,7 +53,7 @@ function FilterTree(props) {
 
     const moveItem = (draggedId, newIndex, cat_id) => {
         dispatch({
-            type: 'REORDER',
+            type: actions.REORDER,
             draggedId, newIndex, cat_id
         })
     }
@@ -108,7 +109,7 @@ function FilterTree(props) {
                     </div>
                 )}
             </TreeView> :
-            <div className='nodata'> 'No data found' </div>}
+            <div className='nodata'> {messages.NODATA} </div>}
             
         </DndProvider>
     )

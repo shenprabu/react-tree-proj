@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 
+import { listName } from '../consts/StringConsts';
+
 const DraggableItem = (props) => {
 
     const { id, listId, index, moveItem } = props
@@ -8,7 +10,7 @@ const DraggableItem = (props) => {
     let ref = useRef(null)
 
     const [{ handlerId }, drop] = useDrop({
-        accept: 'DnDLIST' + listId,
+        accept: listName.DnDLIST + listId,
         collect(monitor) {
             return {
                 handlerId: monitor.getHandlerId(),
@@ -60,7 +62,7 @@ const DraggableItem = (props) => {
     });
 
     const [{ isDragging }, drag] = useDrag({
-        type: 'DnDLIST' + listId,
+        type: listName.DnDLIST + listId,
         item: () => {
             return { id, index };
         },
