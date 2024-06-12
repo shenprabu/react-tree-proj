@@ -1,5 +1,5 @@
-import TreeView from '@mui/lab/TreeView';
-import TreeItem from '@mui/lab/TreeItem';
+import { SimpleTreeView } from '@mui/x-tree-view';
+import { TreeItem } from '@mui/x-tree-view';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
@@ -77,13 +77,13 @@ function FilterTree(props) {
             />
             
             {searchedTreedata.data.length ? 
-            <TreeView 
+            <SimpleTreeView 
                 defaultCollapseIcon={<ExpandMoreIcon />} 
                 defaultExpandIcon={<ChevronRightIcon />} 
             >
                 {searchedTreedata.data.map(cat => 
                     <div key={cat.id}>
-                        <TreeItem nodeId={cat.name} label={ 
+                        <TreeItem itemId={cat.name} label={ 
                             <TextWithCheckbox 
                                 text={cat.name} 
                                 id={cat.id} 
@@ -100,7 +100,7 @@ function FilterTree(props) {
                                 index={option.order}
                                 moveItem={moveItem}
                             >
-                                <TreeItem nodeId={option.name} onFocusCapture={e => e.stopPropagation()} label={
+                                <TreeItem itemId={option.name} onFocusCapture={e => e.stopPropagation()} label={
                                     <TextWithCheckbox 
                                         text={option.name} 
                                         id={option.id} 
@@ -114,7 +114,7 @@ function FilterTree(props) {
                         </TreeItem>
                     </div>
                 )}
-            </TreeView> :
+            </SimpleTreeView> :
             <div className='nodata'> {messages.NODATA} </div>}
             
         </DndProvider>
