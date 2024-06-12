@@ -1,5 +1,5 @@
 
-In the project directory, you can run:
+Clone, cd and
 
 ### `npm install`
 
