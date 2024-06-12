@@ -1,5 +1,5 @@
 {
-  "name": "test-proj",
+  "name": "react-basic-tree",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +11,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
-    "node-sass": "^7.0.1",
+    "node-sass": "^8.0.0",
     "react": "^17.0.2",
     "react-dnd": "^14.0.5",
     "react-dnd-html5-backend": "^14.1.0",
