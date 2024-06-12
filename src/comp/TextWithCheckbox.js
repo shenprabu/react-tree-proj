@@ -29,7 +29,7 @@ function TextWithCheckbox(props) {
     }
 
     const [isEdit, setIsEdit] = useState(false)
-    const [isHover, setIsHover] = useState(false)
+    const [isHoverd, setisHoverd] = useState(false)
 
     const handleEdit = (event) => {
         if(event.key === keys.ENTER) {
@@ -58,7 +58,7 @@ function TextWithCheckbox(props) {
     const color = props.checked ? colorCodes.BLUE : colorCodes.GREY
 
     return(
-        <div className='tree-item' onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
+        <div className='tree-item' onMouseEnter={() => setisHoverd(true)} onMouseLeave={() => setisHoverd(false)}>
             <Checkbox
                 checked={props.checked} 
                 indeterminate={props.indeterminate}
@@ -71,7 +71,7 @@ function TextWithCheckbox(props) {
                 <input className='edit-item' onClick={e => e.stopPropagation()} onKeyUp={handleEdit} defaultValue={props.text} /> :
                 props.text} 
 
-                {props.level !== 0 && isHover && <div className='tree-item-actions'>
+                {props.level !== 0 && isHoverd && <div className='tree-item-actions'>
                     {!isEdit && <EditIcon className='edit-icon' fontSize='small' color='action' onClick={e => {e.stopPropagation(); setIsEdit(true)}} />}
                     <DeleteIcon className='delete-icon' color='action' onClick={handleDelete} />
                 </div>}
