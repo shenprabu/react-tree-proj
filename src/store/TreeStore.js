@@ -1,4 +1,4 @@
-import { createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
 
 import { actions } from "../consts/StringConsts";
 import statedata from "../data/statedata";
@@ -139,6 +139,8 @@ const checkOpt = (opt, props, checkVal) => {
     return opt
 }
 
-const store = createStore(treeStoreReducer);
+const store = configureStore({
+    reducer: treeStoreReducer
+});
 
 export default store
