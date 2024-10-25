@@ -5,7 +5,8 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 
-import { actions, colorCodes, keys } from '../consts/StringConsts'
+import { check, edit, remove } from '../slices/treeSlice';
+import { colorCodes, keys } from '../consts/StringConsts'
 
 function TextWithCheckbox(props) {
 
@@ -21,11 +22,10 @@ function TextWithCheckbox(props) {
     }
 
     const dispatchCheck = (checkVal) => {
-        dispatch({
-            type: actions.CHECK,
+        dispatch(check({
             checkVal,
             props
-        })
+        }))
     }
 
     const [isEdit, setIsEdit] = useState(false)
@@ -33,11 +33,10 @@ function TextWithCheckbox(props) {
 
     const handleEdit = (event) => {
         if(event.key === keys.ENTER) {
-            dispatch({
-                type: actions.EDIT,
+            dispatch(edit({
                 newVal: event.target.value,
                 props
-            })
+            }))
             setIsEdit(false)
         }
         if(event.key === keys.ESCAPE) {
@@ -48,10 +47,7 @@ function TextWithCheckbox(props) {
     const handleDelete = (event) => {
         event.stopPropagation();
         if(window.confirm(`Delete item "${props.text}"?`)) {
-            dispatch({
-                type: actions.DELETE,
-                props
-            })
+            dispatch(remove(props))
         }
     }
 

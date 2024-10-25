@@ -3,7 +3,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 
 import { useDispatch } from 'react-redux';
 
-import { actions, colorCodes } from '../consts/StringConsts';
+import { check } from '../slices/treeSlice';
+import { colorCodes } from '../consts/StringConsts';
 
 
 function SearchArea(props) {
@@ -16,11 +17,10 @@ function SearchArea(props) {
     }
 
     const dispatchCheck = (checkVal) => {
-        dispatch({
-            type: actions.CHECK,
+        dispatch(check({
             checkVal,
             props: {...props, isCheckAll: true}
-        })
+        }))
     }
 
     const clearSearch = () => {

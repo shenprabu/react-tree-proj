@@ -14,7 +14,8 @@ import './styles/FilterTree.scss';
 import TextWithCheckbox from './comp/TextWithCheckbox';
 import SearchArea from './comp/SearchArea';
 import DraggableItem from './comp/DraggableItem';
-import { actions, messages } from './consts/StringConsts';
+import { reorder } from './slices/treeSlice';
+import { messages } from './consts/StringConsts';
 
 
 function FilterTree(props) {
@@ -50,19 +51,19 @@ function FilterTree(props) {
     }
 
     const searchedTreedata = {data: searchTreedata().data.map(cat => {
-        cat.options.sort((a, b) => {
+        const copyCat = structuredClone(cat);   // can not mutate the state. Can we sort this at reorder slice method?
+        copyCat.options.sort((a, b) => {
             return a.order > b.order ? 1 : -1
         })
-        return cat
+        return copyCat
     })}
 
     const dispatch = useDispatch()
 
     const moveItem = (draggedId, newIndex, cat_id) => {
-        dispatch({
-            type: actions.REORDER,
+        dispatch(reorder({
             draggedId, newIndex, cat_id
-        })
+        }))
     }
 
     return(
@@ -78,8 +79,8 @@ function FilterTree(props) {
             
             {searchedTreedata.data.length ? 
             <SimpleTreeView 
-                defaultCollapseIcon={<ExpandMoreIcon />} 
-                defaultExpandIcon={<ChevronRightIcon />} 
+                defaultcollapseicon={<ExpandMoreIcon />} 
+                defaultexpandicon={<ChevronRightIcon />} 
             >
                 {searchedTreedata.data.map(cat => 
                     <div key={cat.id}>
