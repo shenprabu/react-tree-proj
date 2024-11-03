@@ -1,31 +1,31 @@
-const treedata =
+const statedata =
     {
         data:
         [
             {
                 id: 1,
-                name: 'Participant',    // filter category
+                name: 'Category',    // filter category
                 level: 0,
                 checked: false,
                 indeterminate: false,
                 options: [
                     {
                         id: 1,
-                        name: 'Name',
+                        name: 'Option1',
                         level: 1,
                         checked: false,
                         order: 1
                     },
                     {
                         id: 2,
-                        name: 'Language',
+                        name: 'Option2',
                         level: 1,
                         checked: false,
                         order: 2
                     },
                     {
                         id: 3,
-                        name: 'Country',
+                        name: 'Option3',
                         level: 1,
                         checked: false,
                         order: 3
@@ -35,52 +35,59 @@ const treedata =
 
             {
                 id: 2,
-                name: 'Game of choice',
+                name: 'Country',
                 level: 0,
                 checked: false,
                 indeterminate: false,
                 options: [
                     {
                         id: 1,
-                        name: 'Game name',
+                        name: 'India',
                         level: 1,
                         checked: false,
                         order: 1
                     },
                     {
                         id: 2,
-                        name: 'Bought',
-                        level: 1,
-                        checked: false,
-                        order: 2
-                    }
-                ]
-            },
-
-            {
-                id: 3,
-                name: 'Performance',
-                level: 0,
-                checked: false,
-                indeterminate: false,
-                options: [
-                    {
-                        id: 1,
-                        name: 'Bank balance',
-                        level: 1,
-                        checked: false,
-                        order: 1
-                    },
-                    {
-                        id: 2,
-                        name: 'Extra info 1',
+                        name: 'USA',
                         level: 1,
                         checked: false,
                         order: 2
                     },
                     {
                         id: 3,
-                        name: 'Extra info 2',
+                        name: 'Canada',
+                        level: 1,
+                        checked: false,
+                        order: 3
+                    }
+                ]
+            },
+
+            {
+                id: 3,
+                name: 'Capital',
+                level: 0,
+                checked: false,
+                indeterminate: false,
+                options: [
+                    {
+                        id: 1,
+                        name: 'New Delhi',
+                        level: 1,
+                        checked: false,
+                        order: 1
+                    },
+                    {
+                        id: 2,
+                        name: 'Washington DC',
+                        level: 1,
+                        checked: false,
+                        order: 2
+                    },
+                    {
+                        id: 3,
+                        name: 'Ottawa',
                         level: 1,
                         checked: false,
                         order: 3
@@ -89,7 +96,5 @@ const treedata =
             }
         ]
     }
-
-const statedata = { treedata }
 
 export default statedata

@@ -38,7 +38,7 @@ function SearchArea(props) {
                 onChange={handleCheck} 
                 style={{color}}
             /> 
-            <input id='search-box' onChange={props.onSearch} /> <ClearIcon className='clear-search' fontSize='5px' color='action' onClick={clearSearch} />
+            <input id='search-box' placeholder="search.." onChange={props.onSearch} /> <ClearIcon className='clear-search' fontSize='5px' color='action' onClick={clearSearch} />
         </div>
     )
 }

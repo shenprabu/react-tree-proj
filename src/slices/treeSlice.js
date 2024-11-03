@@ -15,13 +15,13 @@ const treeSlice = createSlice({
 
         check: (state, action) => {
             const {checkVal, props} = action.payload
-            state.treedata.data = state.treedata.data.map(cat => checkCat(cat, props, checkVal))
+            state.data = state.data.map(cat => checkCat(cat, props, checkVal))
             sessionStorage.setItem('treedata', JSON.stringify(state))
         },
 
         remove: (state, action) => {
             const {id, cat_id} = action.payload
-            state.treedata.data = state.treedata.data.map(cat => {
+            state.data = state.data.map(cat => {
                 if(cat.id === cat_id) {
                     const updatedOptions = cat.options.filter(opt => opt.id !== id)
                     return {...cat,
@@ -38,7 +38,7 @@ const treeSlice = createSlice({
         edit: (state, action) => {
             const { props: {id, cat_id}, newVal} = action.payload
 
-            const toUpdate = state.treedata.data.find(cat => cat.id === cat_id).options.find(opt => opt.id === id);
+            const toUpdate = state.data.find(cat => cat.id === cat_id).options.find(opt => opt.id === id);
             toUpdate.name = newVal;
             sessionStorage.setItem('treedata', JSON.stringify(state));
         },
@@ -46,7 +46,7 @@ const treeSlice = createSlice({
         reorder: (state, action) => {
             const {draggedId, newIndex, cat_id} = action.payload
 
-            state.treedata.data = state.treedata.data.map(cat => {
+            state.data = state.data.map(cat => {
                 if(cat.id === cat_id) {
                     reOrderOptions(cat, draggedId, newIndex)
                 }

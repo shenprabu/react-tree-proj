@@ -20,7 +20,7 @@ import { messages } from './consts/StringConsts';
 
 function FilterTree(props) {
 
-    const treedata = useSelector(state => state.treedata)
+    const treedata = useSelector(state => state)
 
     const [searchKey, setSearchKey] = useState('')
     
@@ -35,7 +35,7 @@ function FilterTree(props) {
         if(searchKey){
             const updatedTreedata = [];
 
-            treedata.data.forEach(cat => {
+            treedata.forEach(cat => {
                 if(cat.name.toLowerCase().indexOf(searchKey.toLowerCase()) !== -1) {
                     updatedTreedata.push(cat)
                     return
